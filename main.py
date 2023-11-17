@@ -13,25 +13,26 @@ class Blockcount():
     def count_blocks(self, region_file):
         block_counts = Counter()
         region = anvil.Region.from_file(region_file)
-        
+
         for x in range(32):
             for z in range(32):
                 try:
                     chunk = anvil.Chunk.from_region(region, x, z)
-                    for y in range(-64, 321):
-                        for dx in range(16):
-                            for dz in range(16):
-                                block = chunk.get_block(dx, y, dz)
-                                if block.id != 'air':
-                                    block_counts[block.id] += 1
+                    for block in anvil.Chunk.stream_chunk(chunk):
+                        if block.id != 'air' and block.id != 0:
+                            block_counts[block.id] += 1
                 except:
                     pass
         return block_counts
 
     def main(self):
         args = self.parser.parse_args()
-        region_filepath = args.path[0]
+        region_filepath = "/".join(args.path)
         filenames = os.listdir(region_filepath + "/")
+        print(filenames)
+
+        del self.parser
+
         with Pool(processes=11) as pool:
             results = pool.map(self.count_blocks, [region_filepath + "/" + filename for filename in filenames])
             total_counts = Counter()
