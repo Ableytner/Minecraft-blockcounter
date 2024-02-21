@@ -1,5 +1,7 @@
 import os
 import anvil
+import json
+from anvil.errors import ChunkNotFound
 from multiprocessing import Pool
 from collections import Counter
 import argparse
@@ -21,8 +23,9 @@ class Blockcount():
                     for block in anvil.Chunk.stream_chunk(chunk):
                         if block.id != 'air' and block.id != 0:
                             block_counts[block.id] += 1
-                except:
+                except ChunkNotFound:
                     pass
+
         return block_counts
 
     def main(self):
@@ -38,6 +41,8 @@ class Blockcount():
             total_counts = Counter()
             for result in results:
                 total_counts += result
+            with open("out.json", "w") as f:
+                json.dump(dict(total_counts), f)
             print(f"Block counts in the region: {dict(total_counts)}")
 
 if __name__ == "__main__":
