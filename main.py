@@ -22,7 +22,7 @@ class Blockcount():
                     chunk = anvil.Chunk.from_region(region, x, z)
                     for block in anvil.Chunk.stream_chunk(chunk):
                         if block.id != 'air' and block.id != 0:
-                            block_counts[block.id] += 1
+                            block_counts[f"{block.id}:{block.data}"] += 1
                 except ChunkNotFound:
                     pass
 
