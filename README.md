@@ -2,4 +2,8 @@
 Minecraft Region File Scanner. Project to count the total and the amount of induvidial blocks saved in a minecraft world
 
 ## Installing dependencies
-```pip install git+https://github.com/0xTiger/anvil-parser.git```
+```pip install -r requirements.txt```
+
+or
+
+```pip install git+https://github.com/Ableytner/anvil-parser.git```
