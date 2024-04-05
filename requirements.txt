@@ -1,1 +1,1 @@
-anvil-parser @ git+https://github.com/Ableytner/anvil-parser.git
+anvil-parser @ git+https://github.com/0xTiger/anvil-parser.git
