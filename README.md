@@ -6,4 +6,4 @@ Minecraft Region File Scanner. Project to count the total and the amount of indu
 
 or
 
-```pip install git+https://github.com/Ableytner/anvil-parser.git```
+```pip install git+https://github.com/0xTiger/anvil-parser.git```
