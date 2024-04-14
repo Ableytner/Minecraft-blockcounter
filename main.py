@@ -1,6 +1,6 @@
 import os
-import anvil
 import json
+from anvil import Chunk, Region
 from anvil.errors import ChunkNotFound
 from multiprocessing import Pool
 from collections import Counter
@@ -14,15 +14,18 @@ class Blockcount():
 
     def count_blocks(self, region_file):
         block_counts = Counter()
-        region = anvil.Region.from_file(region_file)
+        region = Region.from_file(region_file)
 
         for x in range(32):
             for z in range(32):
                 try:
-                    chunk = anvil.Chunk.from_region(region, x, z)
-                    for block in anvil.Chunk.stream_chunk(chunk):
+                    chunk = Chunk.from_region(region, x, z)
+                    for block in Chunk.stream_chunk(chunk):
                         if block.id != 'air' and block.id != 0:
-                            block_counts[f"{block.id}:{block.data}"] += 1
+                            if hasattr(block, "data"):
+                                block_counts[f"{block.id}:{block.data}"] += 1
+                            else:
+                                block_counts[f"{block.id}"] += 1
                 except ChunkNotFound:
                     pass
 
